@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Parcel Sandbox</title>
+	<meta charset="UTF-8" />
+	<link rel="stylesheet" type="text/css" href="styles.css">
+</head>
+
+<body>
+	<div id="app">
+
+        <h1> to-do list</h1>
+
+        <!--
+            		<button class="btnDisplayTodos" onclick="handlers.displayTodos()">Display to-dos</button><br/>
+        -->
+
+        <div>
+            <input id="inputTodo" class="user-input" type="text" placeholder="name of to-do"/>
+            <button id="btnAddTodo" onclick="handlers.addTodo()">+</button>
+            <br/><br/>
+        </div>
+<!--
+        <div>
+            <input type="number" id="inputChangePosition" placeholder="change position #">
+            <input type="text" id="inputChangeText" placeholder="new name of to-do">
+            <button onclick="handlers.changeTodo()">Change to-do</button>
+            <br/></br>
+        </div>
+
+
+
+        <div>
+            <input type="number" id="inputDeletePosition" placeholder="delete position #">
+            <button onclick="handlers.deleteTodo()">&times;</button>
+            <br/><br/>
+        </div>
+
+        <div>
+            <input type="number" id="inputTogglePosition" placeholder="toggle position #">
+            <button onclick="handlers.toggleCompleted()">toggle</button>
+            <br/><br/>
+        </div>
+-->
+        <div>
+            <button class="btnToggleAll" onclick="handlers.toggleAll()">toggle all</button>
+            <br/></br>
+            <ul class="todoList">
+                <!--
+                <li class="todo"><input class="checkbox" type="checkbox"><label for="todo">to do</label><span class="delete">&times;</span></label></li
+                -->
+            </ul>
+        </div>
+	</div>
+
+	<script src="script.js">
+	</script>
+</body>
+
+</html>
