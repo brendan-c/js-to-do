@@ -55,6 +55,10 @@ var todoList = {
 }
 
 var handlers = {
+  this: function(e) {
+    console.log(e)
+    return e
+  },
   toggleAll: function () {
     todoList.toggleAll()
     view.displayTodos()
@@ -86,6 +90,8 @@ var handlers = {
       return e.todoText
     }).indexOf(str)
     console.log(pos, str)
+    e.parentNode.querySelector('.toggle').classList.toggle('hide')
+    e.parentNode.querySelector('.delete').classList.toggle('hide')
 
     inputEdit = e.parentNode.querySelector('.inputEdit')
     inputEdit.classList.toggle('hide')
@@ -151,16 +157,15 @@ let view = {
 
       // check if todo is completed
       if (todo.completed === true) {
-        completetionStatus = '(x) '
+        completetionStatus = '☑ '
       } else {
-        completetionStatus = '( ) '
+        completetionStatus = '▢ '
       }
 
       // create todo
       let span = document.createElement('span')
       span.classList.add('todoText')
       let li = document.createElement('li')
-      li.textContent = completetionStatus
       span.textContent = todo.todoText
       li.classList.add('todo')
       li.id = ''
@@ -168,13 +173,13 @@ let view = {
 
       //delete btn
       let btnDelete = document.createElement('button')
-      btnDelete.textContent = 'x'
+      btnDelete.textContent = 'delete'
       btnDelete.classList.add('delete')
       btnDelete.setAttribute("onclick", 'handlers.deleteThisTodo(this)')
 
       //toggle button
       let btnToggle = document.createElement('button')
-      btnToggle.textContent = 'toggle'
+      btnToggle.textContent = completetionStatus
       btnToggle.classList.add('toggle')
       btnToggle.setAttribute("onclick", 'handlers.toggleThisTodo(this)')
 
@@ -182,22 +187,22 @@ let view = {
       let btnEdit = document.createElement('button')
       btnEdit.textContent = 'edit'
       btnEdit.classList.add('edit')
-      btnEdit.setAttribute("onclick", 'handlers.changeThisTodo(this)')
+      btnEdit.setAttribute("onclick", 'handlers.this(this); handlers.changeThisTodo(this)')
 
       //edit input
       let inputEdit = document.createElement('input')
+      inputEdit.id = 'inputEdit'
       inputEdit.classList.add('inputEdit')
       inputEdit.classList.toggle('hide')
 
       //append to-do item
       ul.appendChild(li)
       let liTodo = document.getElementById(todo.id)
+      liTodo.appendChild(btnToggle)
       liTodo.appendChild(span)
-
-      //append controls
       liTodo.appendChild(inputEdit)
       liTodo.appendChild(btnDelete)
-      liTodo.appendChild(btnToggle)
+      
       liTodo.appendChild(btnEdit)
     }
   }
@@ -209,5 +214,17 @@ document.addEventListener('keypress', function (event) {
     if (inputTodo === document.activeElement) {
       handlers.addTodo()
     }
+    if (inputEdit === document.activeElement){
+      console.log(event.target)
+      handlers.changeThisTodo(handlers.changeThisTodo(event.target))
+    }
+  }
+})
+
+document.addEventListener('dblclick', function(event){
+  let e = event.target
+  let parent = e.parentNode
+  if(parent.classList.contains('todo')){
+    handlers.changeThisTodo(parent)
   }
 })

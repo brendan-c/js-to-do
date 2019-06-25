@@ -23,18 +23,31 @@ button:hover {
 }
 .todo {
   margin-top: 5px;
+  position: relative;
+}
+.todo span{
+  font-size:18px;
+  margin-left:25px;
 }
 .checkbox {
   margin-right: 10px;
   cursor: pointer;
 }
 .delete {
-  margin-left: 5px;
-  font-weight: 600;
+  margin-left: 25px;
 }
 .delete:hover {
   cursor: pointer;
 }
+.toggle{
+  background:none;
+  border:none;
+  padding:0;
+  font-size:20px;
+  position:absolute;
+  top:-3px;
+}
+
 
 .show{
 	display: inline-block;
