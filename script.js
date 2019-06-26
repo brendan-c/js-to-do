@@ -153,23 +153,30 @@ let view = {
     for (let i = 0; i < todoList.todos.length; i++) {
       let todo = todoList.todos[i]
       let completetionStatus = ''
+        // create todo
+        let span = document.createElement('span')
+        span.classList.add('todoText')
+        let li = document.createElement('li')
+        span.textContent = todo.todoText
+        li.classList.add('todo')
+        li.id = ''
+        li.id = todo.id
       // get current todo item
-
       // check if todo is completed
       if (todo.completed === true) {
         completetionStatus = '☑ '
+        if(!span.classList.contains('completed')){
+          span.classList.add('completed')
+        }
       } else {
         completetionStatus = '▢ '
+        if(span.classList.contains('completed')){
+          span.classList.remove('completed')
+        }
+        
       }
 
-      // create todo
-      let span = document.createElement('span')
-      span.classList.add('todoText')
-      let li = document.createElement('li')
-      span.textContent = todo.todoText
-      li.classList.add('todo')
-      li.id = ''
-      li.id = todo.id
+    
 
       //delete btn
       let btnDelete = document.createElement('button')
