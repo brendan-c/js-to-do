@@ -66,12 +66,18 @@ var handlers = {
   addTodo: function () {
     let inputTodo = document.getElementById('inputTodo')
     let id = todoList.todos.length
-    if (inputTodo.value !== '') {
+    let pos = todoList.todos.map(function (e) {
+      return e.todoText
+    }).indexOf(inputTodo.value)
+    console.log(pos)
+    if (inputTodo.value === '') {
+      alert('enter a name for the to-do')
+    } else if(pos > -1){
+        alert('"'+inputTodo.value+'" is already on the to-do list') 
+    } else {
       todoList.addTodo(id, inputTodo.value)
       inputTodo.value = ''
       view.displayTodos()
-    } else {
-      alert('enter a name for the to-do')
     }
   },
   changeTodo: function () {
@@ -90,8 +96,8 @@ var handlers = {
       return e.todoText
     }).indexOf(str)
     console.log(pos, str)
-    e.parentNode.querySelector('.toggle').classList.toggle('hide')
-    e.parentNode.querySelector('.delete').classList.toggle('hide')
+    e.parentNode.querySelector('.checkBox').classList.toggle('hide')
+    e.parentNode.querySelector('.btnDelete').classList.toggle('hide')
 
     inputEdit = e.parentNode.querySelector('.inputEdit')
     inputEdit.classList.toggle('hide')
@@ -163,16 +169,21 @@ let view = {
         li.id = todo.id
       // get current todo item
       // check if todo is completed
-      if (todo.completed === true) {
-        completetionStatus = '☑ '
-        if(!span.classList.contains('completed')){
-          span.classList.add('completed')
-        }
-      } else {
-        completetionStatus = '▢ '
-        if(span.classList.contains('completed')){
-          span.classList.remove('completed')
-        }
+
+        let checkBox = document.createElement('input')
+        checkBox.setAttribute('type','checkbox')
+        checkBox.classList.add('checkBox')
+
+        if (todo.completed === true) {
+          checkBox.checked = true
+          if(!span.classList.contains('completed')){
+            span.classList.add('completed')
+          }
+        } else {
+          checkBox.checked = false
+          if(span.classList.contains('completed')){
+            span.classList.remove('completed')
+          }
         
       }
 
@@ -180,18 +191,20 @@ let view = {
 
       //delete btn
       let btnDelete = document.createElement('button')
+      btnDelete.classList.add('button')
       btnDelete.textContent = 'delete'
-      btnDelete.classList.add('delete')
+      btnDelete.classList.add('btnDelete')
       btnDelete.setAttribute("onclick", 'handlers.deleteThisTodo(this)')
 
       //toggle button
       let btnToggle = document.createElement('button')
-      btnToggle.textContent = completetionStatus
+
       btnToggle.classList.add('toggle')
       btnToggle.setAttribute("onclick", 'handlers.toggleThisTodo(this)')
 
       //edit button
       let btnEdit = document.createElement('button')
+      btnEdit.classList.add('button')
       btnEdit.textContent = 'edit'
       btnEdit.classList.add('edit')
       btnEdit.setAttribute("onclick", 'handlers.this(this); handlers.changeThisTodo(this)')
@@ -199,13 +212,14 @@ let view = {
       //edit input
       let inputEdit = document.createElement('input')
       inputEdit.id = 'inputEdit'
+      inputEdit.classList.add('input')
       inputEdit.classList.add('inputEdit')
       inputEdit.classList.toggle('hide')
 
       //append to-do item
       ul.appendChild(li)
       let liTodo = document.getElementById(todo.id)
-      liTodo.appendChild(btnToggle)
+      liTodo.appendChild(checkBox)
       liTodo.appendChild(span)
       liTodo.appendChild(inputEdit)
       liTodo.appendChild(btnDelete)
@@ -235,3 +249,12 @@ document.addEventListener('dblclick', function(event){
     handlers.changeThisTodo(parent)
   }
 })
+
+
+document.addEventListener( 'click', function(event) {
+  let e = event.target
+  let parent = e.parentNode
+    if(e.classList.contains('checkBox')) {
+      handlers.toggleThisTodo(e)
+    }
+});

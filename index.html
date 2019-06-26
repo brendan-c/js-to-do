@@ -3,22 +3,23 @@
 
 <head>
 	<title>Parcel Sandbox</title>
-	<meta charset="UTF-8" />
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
 	<link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
 	<div id="app">
 
-        <h1>to-do list</h1>
+        <h1 class="title">to-do list</h1>
 
         <!--
             		<button class="btnDisplayTodos" onclick="handlers.displayTodos()">Display to-dos</button><br/>
         -->
 
         <div>
-            <input id="inputTodo" class="user-input" type="text" placeholder="name of to-do"/>
-            <button id="btnAddTodo" onclick="handlers.addTodo()">+</button>
+            <input id="inputTodo" class="user-input input" type="text" placeholder="name of to-do"/>
+            <button id="btnAddTodo" class ="button" onclick="handlers.addTodo()">+</button>
             <br/><br/>
         </div>
 <!--
@@ -44,7 +45,7 @@
         </div>
 -->
         <div>
-            <button class="btnToggleAll" onclick="handlers.toggleAll()">toggle all</button>
+            <button class="btnToggleAll button" onclick="handlers.toggleAll()" class="button">toggle all</button>
             <br/></br>
             <ul class="todoList">
                 <!--
