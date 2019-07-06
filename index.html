@@ -2,61 +2,37 @@
 <html>
 
 <head>
-	<title>Parcel Sandbox</title>
-    <meta charset="UTF-8" />
+    <title>Parcel Sandbox</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.css">
-	<link rel="stylesheet" type="text/css" href="styles.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 
 <body>
-	<div id="app">
+
+    <div id="app">
 
         <h1 class="title">to-do list</h1>
 
-        <!--
-            		<button class="btnDisplayTodos" onclick="handlers.displayTodos()">Display to-dos</button><br/>
-        -->
-
         <div>
-            <input id="inputTodo" class="user-input input" type="text" placeholder="name of to-do"/>
-            <button id="btnAddTodo" class ="button" onclick="handlers.addTodo()">+</button>
-            <br/><br/>
-        </div>
-<!--
-        <div>
-            <input type="number" id="inputChangePosition" placeholder="change position #">
-            <input type="text" id="inputChangeText" placeholder="new name of to-do">
-            <button onclick="handlers.changeTodo()">Change to-do</button>
-            <br/></br>
+            <input id="inputTodo" class="user-input input" type="text" placeholder="name of to-do" />
+            <button id="btnAddTodo" class="button" onclick="handlers.addTodo()">+</button>
+            <br/>
+            <br/>
         </div>
 
-
-
-        <div>
-            <input type="number" id="inputDeletePosition" placeholder="delete position #">
-            <button onclick="handlers.deleteTodo()">&times;</button>
-            <br/><br/>
-        </div>
-
-        <div>
-            <input type="number" id="inputTogglePosition" placeholder="toggle position #">
-            <button onclick="handlers.toggleCompleted()">toggle</button>
-            <br/><br/>
-        </div>
--->
         <div>
             <button class="btnToggleAll button" onclick="handlers.toggleAll()" class="button">toggle all</button>
-            <br/></br>
-            <ul class="todoList">
-                <!--
-                <li class="todo"><input class="checkbox" type="checkbox"><label for="todo">to do</label><span class="delete">&times;</span></label></li
-                -->
-            </ul>
+            <br/>
+            <br/>
+            <ul class="todoList"></ul>
         </div>
-	</div>
 
-	<script src="script.js">
-	</script>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 
 </html>
