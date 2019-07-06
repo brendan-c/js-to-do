@@ -26,10 +26,10 @@ button: hover {
 	line-height: 2.1;
 	vertical-align: middle;
 }
-li: hover>button.btnDelete{
+li:hover>button.btnDelete{
 	display: inline-block;
 }
-li: hover>button.edit{
+li:hover>button.edit{
 	display: inline-block;
 }
 span{
