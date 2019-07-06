@@ -1,82 +1,80 @@
 ul, ol {
-  list-style: none;
-  margin:0;
-  padding:0;
+	list-style: none;
+	margin: 0;
+	padding: 0;
 }
-button:hover {
-  cursor: pointer;
+button: hover {
+	cursor: pointer;
 }
 #app{
-	margin:0 auto;
-	width:400px;
+	margin: 50px auto 0 auto;
+	width: 400px;
+}
+.title{
+	text-align: center;
 }
 .btnDisplayTodos {
-  margin-bottom: 25px;
+	margin-bottom: 25px;
 }
 .user-input {
-  margin-bottom: 0;
-  width:300px;
+	margin-bottom: 0;
+	width: 300px;
 }
 .todo {
-  height:45px;
-  position: relative;
-  line-height: 2.1;
-  vertical-align: middle;
+	height: 45px;
+	position: relative;
+	line-height: 2.1;
+	vertical-align: middle;
 }
-li:hover>button.btnDelete{
-  display:inline-block;
+li: hover>button.btnDelete{
+	display: inline-block;
 }
-li:hover>button.edit{
-  display:inline-block;
+li: hover>button.edit{
+	display: inline-block;
 }
 span{
-  font-size:18px;
-  margin-left:30px;
-
+	font-size: 18px;
+	margin-left: 30px;
 }
 .button{
-  vertical-align:middle;
-  max-height:auto;
-  max-width:auto;
-  height:auto;
-  width:auto;
-  
+	vertical-align: middle;
+	max-height: auto;
+	max-width: auto;
+	height: auto;
+	width: auto;
 }
 .inputEdit{
-  width:200px;
+	width: 200px;
 }
 .btnDelete {
-  margin-left: 20px;
-  display:none;
-  margin-bottom:7px;
+	margin-left: 20px;
+	display: none;
+	margin-bottom: 7px;
 }
-.delete:hover {
-  cursor: pointer;
+.delete: hover {
+	cursor: pointer;
 }
 .checkBox{
-  padding:0;
-  font-size:20px;
-  position:absolute;
-  top:13px;
+	padding: 0;
+	font-size: 20px;
+	position: absolute;
+	top: 13px;
 }
-
-.checkBox:hover{
-  cursor:pointer;
+.checkBox: hover{
+	cursor: pointer;
 }
 .edit{
-  display:none;
-  margin-left:8px;
-  margin-bottom:7px;
+	display: none;
+	margin-left: 8px;
+	margin-bottom: 7px;
 }
 .show{
 	display: inline-block;
 }
-
 .hide{
-	display:none;
+	display: none;
 }
-
 .completed{
-  text-decoration:line-through;
-  color:grey;
+	text-decoration: line-through;
+	color: grey;
 }
