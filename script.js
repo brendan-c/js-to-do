@@ -51,10 +51,12 @@ var handlers = {
     console.log(e)
     return e
   },
+  
   toggleAll: function () {
     todoList.toggleAll()
     view.displayTodos()
   },
+  
   addTodo: function () {
     let inputTodo = document.getElementById('inputTodo')
     let id = todoList.todos.length
@@ -72,16 +74,9 @@ var handlers = {
       view.displayTodos()
     }
   },
-  changeTodo: function () {
-    let inputChangePosition = document.getElementById('inputChangePosition')
-    let inputChangeText = document.getElementById('inputChangeText')
-    todoList.changeTodo(inputChangePosition.valueAsNumber, inputChangeText.value)
-    inputChangePosition.value = ''
-    inputChangeText.value = ''
-    view.displayTodos()
-  },
+  
   changeThisTodo: function (e) {
-    let pos, str
+    let pos, str, todo
     todo = e.parentNode.querySelector('span')
     str = todo.innerText
     pos = todoList.todos.map(function (e) {
@@ -90,8 +85,7 @@ var handlers = {
     console.log(pos, str)
     e.parentNode.querySelector('.checkBox').classList.toggle('hide')
     e.parentNode.querySelector('.btnDelete').classList.toggle('hide')
-
-    inputEdit = e.parentNode.querySelector('.inputEdit')
+    let inputEdit = e.parentNode.querySelector('.inputEdit')
     inputEdit.classList.toggle('hide')
     todo.classList.toggle('hide')
     if (inputEdit.value === '') {
@@ -101,21 +95,11 @@ var handlers = {
       view.displayTodos()
     }
   },
-
-  deleteTodo: function () {
-    let inputDeletePosition = document.getElementById('inputDeletePosition')
-    todoList.deleteTodo(inputDeletePosition.valueAsNumber)
-    inputDeletePosition.value = ''
-    view.displayTodos()
-  },
-
+  
   deleteThisTodo: function (e) {
-    let pos, str
-
+    let pos, str, todo
     todo = e.parentNode.querySelector('span')
     str = todo.innerText
-
-
     pos = todoList.todos.map(function (e) {
       return e.todoText;
     }).indexOf(str);
@@ -123,16 +107,9 @@ var handlers = {
     todoList.deleteTodo(pos)
     view.displayTodos()
   },
-
-  toggleCompleted: function () {
-    let inputTogglePosition = document.getElementById('inputTogglePosition')
-    todoList.toggleCompleted(inputTogglePosition.valueAsNumber)
-    inputTogglePosition.value = ''
-    view.displayTodos()
-  },
-
+  
   toggleThisTodo: function (e) {
-    let pos, str
+    let pos, str, todo
     todo = e.parentNode.querySelector('span')
     str = todo.innerText
     pos = todoList.todos.map(function (e) {
@@ -146,22 +123,26 @@ var handlers = {
 
 let view = {
   displayTodos: function () {
+    
     let ul = document.querySelector('.todoList')
     ul.innerHTML = ''
-    for (let i = 0; i < todoList.todos.length; i++) {
-      let todo = todoList.todos[i]
+    
+    todoList.todos.forEach((todo, i) => {
+      
+      //let todo = todoList.todos[i]
       let completetionStatus = ''
+      
         // create todo
         let span = document.createElement('span')
         span.classList.add('todoText')
+      
         let li = document.createElement('li')
         span.textContent = todo.todoText
         li.classList.add('todo')
         li.id = ''
-        li.id = todo.id
-      // get current todo item
+        li.id = i
+      
       // check if todo is completed
-
         let checkBox = document.createElement('input')
         checkBox.setAttribute('type','checkbox')
         checkBox.classList.add('checkBox')
@@ -177,9 +158,7 @@ let view = {
             span.classList.remove('completed')
           }
         
-      }
-
-  
+        }
 
       //delete btn
       let btnDelete = document.createElement('button')
@@ -217,7 +196,7 @@ let view = {
       liTodo.appendChild(btnDelete)
       
       liTodo.appendChild(btnEdit)
-    }
+    })
   }
 }
 
@@ -227,7 +206,7 @@ document.addEventListener('keypress', function (event) {
     if (inputTodo === document.activeElement) {
       handlers.addTodo()
     }
-    if (inputEdit === document.activeElement){
+    if (document.getElementByID("inputEdit") === document.activeElement){
       console.log(event.target)
       handlers.changeThisTodo(handlers.changeThisTodo(event.target))
     }
@@ -241,7 +220,6 @@ document.addEventListener('dblclick', function(event){
     handlers.changeThisTodo(parent)
   }
 })
-
 
 document.addEventListener( 'click', function(event) {
   let e = event.target
