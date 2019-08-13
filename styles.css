@@ -18,7 +18,7 @@ button: hover {
 }
 .user-input {
 	margin-bottom: 0;
-	width: 359px;
+	width: 350px;
 }
 .todo {
 	height: 45px;
@@ -59,10 +59,14 @@ span{
 	font-size: 20px;
 	position: absolute;
 	top: 13px;
+	background-color: #eee;
 }
-.checkBox: hover{
+
+
+.checkBox:hover{
 	cursor: pointer;
 }
+
 .edit{
 	display: none;
 	margin-left: 8px;

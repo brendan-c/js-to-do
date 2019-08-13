@@ -32,25 +32,17 @@ var todoList = {
 
   toggleAll: function () {
     let totalTodos = this.todos.length
-
     let completedTodos = 0
-    // Count # of completed todos
-    for (let i = 0; i < totalTodos; i++) {
-      if (this.todos[i].completed === true) {
-        completedTodos++
+    this.todos.forEach(todo => {
+      if (todo.completed) completedTodos++;
+    })
+    this.todos.forEach(todo => {
+      if (completedTodos === totalTodos) {
+        todo.completed = false;
+      } else {
+        todo.completed = true;
       }
-    }
-    // Case 1: If everythings true, make everything false
-    if (completedTodos === totalTodos) {
-      for (let i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = false
-      }
-    } else {
-      for (let i = 0; i < totalTodos; i++) {
-        this.todos[i].completed = true
-      }
-    }
-
+    })
   }
 }
 
@@ -187,7 +179,7 @@ let view = {
         
       }
 
-    
+  
 
       //delete btn
       let btnDelete = document.createElement('button')
