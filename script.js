@@ -1,25 +1,18 @@
 var todoList = {
   todos: [],
-
   addTodo: function (id, todoText) {
     this.todos.push({
       id: id,
       todoText: todoText,
       completed: false
     })
-
   },
-
   changeTodo: function (position, todoText) {
     this.todos[position].todoText = todoText
-
   },
-
   deleteTodo: function (position) {
     this.todos.splice(position, 1)
-
   },
-
   toggleCompleted: function (position) {
     let todo = this.todos[position]
     if (todo.completed === true) {
@@ -27,9 +20,7 @@ var todoList = {
     } else {
       todo.completed = true
     }
-
   },
-
   toggleAll: function () {
     let totalTodos = this.todos.length
     let completedTodos = 0
@@ -51,12 +42,10 @@ var handlers = {
     console.log(e)
     return e
   },
-  
   toggleAll: function () {
     todoList.toggleAll()
     view.displayTodos()
   },
-  
   addTodo: function () {
     let inputTodo = document.getElementById('inputTodo')
     let id = todoList.todos.length
@@ -74,12 +63,10 @@ var handlers = {
       view.displayTodos()
     }
   },
-  
-  changeThisTodo: function (e) {
-    let pos, str, todo
-    todo = e.parentNode.querySelector('span')
-    str = todo.innerText
-    pos = todoList.todos.map(function (e) {
+  editTodo: function (e) {
+    let todo = e.parentNode.querySelector('span')
+    let str = todo.innerText
+    let pos = todoList.todos.map(function (e) {
       return e.todoText
     }).indexOf(str)
     console.log(pos, str)
@@ -95,24 +82,20 @@ var handlers = {
       view.displayTodos()
     }
   },
-  
-  deleteThisTodo: function (e) {
-    let pos, str, todo
-    todo = e.parentNode.querySelector('span')
-    str = todo.innerText
-    pos = todoList.todos.map(function (e) {
+  deleteTodo: function (e) {
+    let todo = e.parentNode.querySelector('span')
+    let str = todo.innerText
+    let pos = todoList.todos.map(function (e) {
       return e.todoText;
     }).indexOf(str);
     console.log(pos, str)
     todoList.deleteTodo(pos)
     view.displayTodos()
   },
-  
-  toggleThisTodo: function (e) {
-    let pos, str, todo
-    todo = e.parentNode.querySelector('span')
-    str = todo.innerText
-    pos = todoList.todos.map(function (e) {
+  completeTodo: function (e) {
+    let todo = e.parentNode.querySelector('span')
+    let str = todo.innerText
+    let pos = todoList.todos.map(function (e) {
       return e.todoText
     }).indexOf(str)
     console.log(pos, str)
@@ -123,30 +106,23 @@ var handlers = {
 
 let view = {
   displayTodos: function () {
-    
     let ul = document.querySelector('.todoList')
     ul.innerHTML = ''
-    
-    todoList.todos.forEach((todo, i) => {
-      
-      //let todo = todoList.todos[i]
+    for (let i = 0; i < todoList.todos.length; i++) {
+      let todo = todoList.todos[i]
       let completetionStatus = ''
-      
         // create todo
         let span = document.createElement('span')
         span.classList.add('todoText')
-      
         let li = document.createElement('li')
         span.textContent = todo.todoText
         li.classList.add('todo')
         li.id = ''
-        li.id = i
-      
+        li.id = todo.id
       // check if todo is completed
         let checkBox = document.createElement('input')
         checkBox.setAttribute('type','checkbox')
         checkBox.classList.add('checkBox')
-
         if (todo.completed === true) {
           checkBox.checked = true
           if(!span.classList.contains('completed')){
@@ -157,36 +133,29 @@ let view = {
           if(span.classList.contains('completed')){
             span.classList.remove('completed')
           }
-        
-        }
-
+      }
       //delete btn
       let btnDelete = document.createElement('button')
       btnDelete.classList.add('button')
       btnDelete.textContent = 'delete'
       btnDelete.classList.add('btnDelete')
-      btnDelete.setAttribute("onclick", 'handlers.deleteThisTodo(this)')
-
+      btnDelete.setAttribute("onclick", 'handlers.deleteTodo(this)')
       //toggle button
       let btnToggle = document.createElement('button')
-
       btnToggle.classList.add('toggle')
-      btnToggle.setAttribute("onclick", 'handlers.toggleThisTodo(this)')
-
+      btnToggle.setAttribute("onclick", 'handlers.completeTodo(this)')
       //edit button
       let btnEdit = document.createElement('button')
       btnEdit.classList.add('button')
       btnEdit.textContent = 'edit'
       btnEdit.classList.add('edit')
-      btnEdit.setAttribute("onclick", 'handlers.this(this); handlers.changeThisTodo(this)')
-
+      btnEdit.setAttribute("onclick", 'handlers.this(this); handlers.editTodo(this)')
       //edit input
       let inputEdit = document.createElement('input')
       inputEdit.id = 'inputEdit'
       inputEdit.classList.add('input')
       inputEdit.classList.add('inputEdit')
       inputEdit.classList.toggle('hide')
-
       //append to-do item
       ul.appendChild(li)
       let liTodo = document.getElementById(todo.id)
@@ -194,37 +163,32 @@ let view = {
       liTodo.appendChild(span)
       liTodo.appendChild(inputEdit)
       liTodo.appendChild(btnDelete)
-      
       liTodo.appendChild(btnEdit)
-    })
+    }
   }
 }
-
 document.addEventListener('keypress', function (event) {
   let inputTodo = document.getElementById('inputTodo')
   if (event.keyCode === 13 || event.which === 13) {
     if (inputTodo === document.activeElement) {
       handlers.addTodo()
-    }
-    if (document.getElementByID("inputEdit") === document.activeElement){
+    } if (document.getElementById('inputEdit') === document.activeElement){
       console.log(event.target)
-      handlers.changeThisTodo(handlers.changeThisTodo(event.target))
+      handlers.editTodo(handlers.editTodo(event.target))
     }
   }
 })
-
 document.addEventListener('dblclick', function(event){
   let e = event.target
   let parent = e.parentNode
   if(parent.classList.contains('todo')){
-    handlers.changeThisTodo(parent)
+    handlers.editTodo(parent)
   }
 })
-
 document.addEventListener( 'click', function(event) {
   let e = event.target
   let parent = e.parentNode
     if(e.classList.contains('checkBox')) {
-      handlers.toggleThisTodo(e)
+      handlers.completeTodo(e)
     }
 });
