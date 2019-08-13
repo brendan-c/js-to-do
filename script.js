@@ -1,3 +1,6 @@
+const $ = (id, parent = document) => parent.getElementById(id)
+const create = (element, parent = document) => parent.createElement(element)
+
 var todoList = {
   todos: [],
   addTodo: function (id, todoText) {
@@ -38,21 +41,15 @@ var todoList = {
 }
 
 var handlers = {
-  this: function(e) {
-    console.log(e)
-    return e
-  },
+  this: e => e,
   toggleAll: function () {
     todoList.toggleAll()
     view.displayTodos()
   },
   addTodo: function () {
-    let inputTodo = document.getElementById('inputTodo')
+    let inputTodo = $('inputTodo')
     let id = todoList.todos.length
-    let pos = todoList.todos.map(function (e) {
-      return e.todoText
-    }).indexOf(inputTodo.value)
-    console.log(pos)
+    let pos = todoList.todos.map(e => e.todoText).indexOf(inputTodo.value)
     if (inputTodo.value === '') {
       alert('enter a name for the to-do')
     } else if(pos > -1){
@@ -66,15 +63,10 @@ var handlers = {
   editTodo: function (e) {
     let todo = e.parentNode.querySelector('span')
     let str = todo.innerText
-    let pos = todoList.todos.map(function (e) {
-      return e.todoText
-    }).indexOf(str)
-    console.log(pos, str)
-    e.parentNode.querySelector('.checkBox').classList.toggle('hide')
-    e.parentNode.querySelector('.btnDelete').classList.toggle('hide')
-    let inputEdit = e.parentNode.querySelector('.inputEdit')
-    inputEdit.classList.toggle('hide')
+    let pos = todoList.todos.map(e => e.todoText).indexOf(str)
+    inputEdit = e.parentNode.querySelector('.inputEdit')
     todo.classList.toggle('hide')
+    inputEdit.classList.toggle('hide')
     if (inputEdit.value === '') {
       inputEdit.value = todo.innerText
     } else {
@@ -85,20 +77,14 @@ var handlers = {
   deleteTodo: function (e) {
     let todo = e.parentNode.querySelector('span')
     let str = todo.innerText
-    let pos = todoList.todos.map(function (e) {
-      return e.todoText;
-    }).indexOf(str);
-    console.log(pos, str)
+    let pos = todoList.todos.map(e => e.todoText).indexOf(str);
     todoList.deleteTodo(pos)
     view.displayTodos()
   },
   completeTodo: function (e) {
     let todo = e.parentNode.querySelector('span')
     let str = todo.innerText
-    let pos = todoList.todos.map(function (e) {
-      return e.todoText
-    }).indexOf(str)
-    console.log(pos, str)
+    let pos = todoList.todos.map(e => e.todoText).indexOf(str)
     todoList.toggleCompleted(pos)
     view.displayTodos()
   }
@@ -108,76 +94,88 @@ let view = {
   displayTodos: function () {
     let ul = document.querySelector('.todoList')
     ul.innerHTML = ''
-    for (let i = 0; i < todoList.todos.length; i++) {
-      let todo = todoList.todos[i]
+
+    todoList.todos.forEach( todo => {
+
       let completetionStatus = ''
         // create todo
-        let span = document.createElement('span')
+        let span = create('span')
         span.classList.add('todoText')
-        let li = document.createElement('li')
+        let li = create('li')
         span.textContent = todo.todoText
         li.classList.add('todo')
         li.id = ''
         li.id = todo.id
+
       // check if todo is completed
-        let checkBox = document.createElement('input')
+        let checkBox = create('input')
         checkBox.setAttribute('type','checkbox')
         checkBox.classList.add('checkBox')
+
         if (todo.completed === true) {
           checkBox.checked = true
-          if(!span.classList.contains('completed')){
+          if (!span.classList.contains('completed')){
             span.classList.add('completed')
           }
         } else {
           checkBox.checked = false
-          if(span.classList.contains('completed')){
+          if (span.classList.contains('completed')){
             span.classList.remove('completed')
           }
-      }
+        
+        }
+
       //delete btn
-      let btnDelete = document.createElement('button')
+      let btnDelete = create('button')
       btnDelete.classList.add('button')
       btnDelete.textContent = 'delete'
       btnDelete.classList.add('btnDelete')
       btnDelete.setAttribute("onclick", 'handlers.deleteTodo(this)')
+
       //toggle button
-      let btnToggle = document.createElement('button')
+      let btnToggle = create('button')
+
       btnToggle.classList.add('toggle')
       btnToggle.setAttribute("onclick", 'handlers.completeTodo(this)')
+
       //edit button
-      let btnEdit = document.createElement('button')
+      let btnEdit = create('button')
       btnEdit.classList.add('button')
       btnEdit.textContent = 'edit'
       btnEdit.classList.add('edit')
       btnEdit.setAttribute("onclick", 'handlers.this(this); handlers.editTodo(this)')
+
       //edit input
-      let inputEdit = document.createElement('input')
+      let inputEdit = create('input')
       inputEdit.id = 'inputEdit'
       inputEdit.classList.add('input')
       inputEdit.classList.add('inputEdit')
       inputEdit.classList.toggle('hide')
+
       //append to-do item
       ul.appendChild(li)
-      let liTodo = document.getElementById(todo.id)
+      let liTodo = $(todo.id)
       liTodo.appendChild(checkBox)
       liTodo.appendChild(span)
       liTodo.appendChild(inputEdit)
       liTodo.appendChild(btnDelete)
       liTodo.appendChild(btnEdit)
-    }
+    })
   }
 }
+
 document.addEventListener('keypress', function (event) {
-  let inputTodo = document.getElementById('inputTodo')
+  let inputTodo = $('inputTodo')
   if (event.keyCode === 13 || event.which === 13) {
     if (inputTodo === document.activeElement) {
       handlers.addTodo()
-    } if (document.getElementById('inputEdit') === document.activeElement){
-      console.log(event.target)
+    }
+    if (inputEdit === document.activeElement){
       handlers.editTodo(handlers.editTodo(event.target))
     }
   }
 })
+
 document.addEventListener('dblclick', function(event){
   let e = event.target
   let parent = e.parentNode
@@ -185,6 +183,7 @@ document.addEventListener('dblclick', function(event){
     handlers.editTodo(parent)
   }
 })
+
 document.addEventListener( 'click', function(event) {
   let e = event.target
   let parent = e.parentNode
